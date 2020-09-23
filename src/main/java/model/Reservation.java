@@ -11,6 +11,4 @@ public class Reservation {
     private Person person;
     @ManyToOne(optional = false)
     private Place place;
-    @ManyToOne(optional = false)
-    private Flight flight;
 }
