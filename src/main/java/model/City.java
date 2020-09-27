@@ -11,6 +11,6 @@ public class City {
     @NotNull
     @Column(nullable = false)
     private String name;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     private Country country;
 }

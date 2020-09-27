@@ -6,7 +6,7 @@ import javax.persistence.*;
 public class Place {
     @EmbeddedId
     private PlacePK placePK;
-    @ManyToOne(cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(optional = false)
     @MapsId("flightId")
     private Flight flight;
 }
