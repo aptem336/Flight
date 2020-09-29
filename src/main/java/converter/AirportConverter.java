@@ -1,4 +1,4 @@
-package controller;
+package converter;
 
 import model.Airport;
 
@@ -10,7 +10,7 @@ import javax.inject.Named;
 import javax.persistence.EntityManager;
 
 @Named
-public class AirportController implements Converter<Airport> {
+public class AirportConverter implements Converter<Airport> {
     @Inject
     private EntityManager em;
     @Override

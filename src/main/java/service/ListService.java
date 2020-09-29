@@ -1,4 +1,4 @@
-package controller;
+package service;
 
 import model.Airport;
 import model.Flight;
@@ -16,7 +16,7 @@ import java.util.List;
 
 @Named
 @ViewScoped
-public class ListController implements Serializable {
+public class ListService implements Serializable {
     @Inject
     private EntityManager em;
 

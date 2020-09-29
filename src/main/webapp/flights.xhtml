@@ -22,7 +22,9 @@
                      value="#{flightsController.flights}"
                      border="1">
             <h:column>
-                <h:outputText value="#{flight.id}"/>
+               <h:button value="*" outcome="reservations" rendered="#{flight.id != null}">
+                   <f:param name="flight_id" value="#{flight.id}"/>
+               </h:button>
             </h:column>
             <h:column>
                 <f:facet name="header">
@@ -30,13 +32,13 @@
                 </f:facet>
                 <h:selectOneMenu id="from_airport"
                                  value="#{flight.fromAirport}"
-                                 converter="#{airportController}"
+                                 converter="#{airportConverter}"
                                  pt:required="true"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}" itemLabel="" noSelectionOption="true"/>
                     <f:selectItems var="airport"
-                                   value="#{listController.airports}"
-                                   itemLabel="#{airport.name}"
+                                   value="#{listService.airports}"
+                                   itemLabel="#{airport.city.name} (#{airport.name})"
                                    itemValue="#{airport}"/>
                     <f:ajax/>
                 </h:selectOneMenu>
@@ -47,13 +49,13 @@
                 </f:facet>
                 <h:selectOneMenu id="to_airport"
                                  value="#{flight.toAirport}"
-                                 converter="#{airportController}"
+                                 converter="#{airportConverter}"
                                  pt:required="true"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}" itemLabel="" noSelectionOption="true"/>
                     <f:selectItems var="airport"
-                                   value="#{listController.airports}"
-                                   itemLabel="#{airport.name}"
+                                   value="#{listService.airports}"
+                                   itemLabel="#{airport.city.name} (#{airport.name})"
                                    itemValue="#{airport}"/>
                     <f:ajax/>
                 </h:selectOneMenu>

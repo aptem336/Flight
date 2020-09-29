@@ -2,11 +2,11 @@ package model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 public class Flight {
+    private static final int DEFAULT_PLACE_COUNT = 200;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -21,6 +21,16 @@ public class Flight {
     @Column(nullable = false)
     @Convert(converter = DateConverter.class)
     private Date date;
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "flight")
+    private List<Place> places = new ArrayList<>();
+
+    public Flight() {
+        for (int row = 0; row < DEFAULT_PLACE_COUNT; row++) {
+            Place place = new Place();
+            place.setFlight(this);
+            places.add(place);
+        }
+    }
 
     public String getId() {
         return id;
@@ -58,17 +68,12 @@ public class Flight {
         this.date = date;
     }
 
-    @Converter(autoApply = true)
-    public static class DateConverter implements AttributeConverter<Date, Long> {
-        @Override
-        public Long convertToDatabaseColumn(Date date) {
-            return date.getTime();
-        }
+    public List<Place> getPlaces() {
+        return places;
+    }
 
-        @Override
-        public Date convertToEntityAttribute(Long timestamp) {
-            return new Date(timestamp);
-        }
+    public void setPlaces(List<Place> places) {
+        this.places = places;
     }
 
     @Override
@@ -82,5 +87,18 @@ public class Flight {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    @Converter(autoApply = true)
+    public static class DateConverter implements AttributeConverter<Date, Long> {
+        @Override
+        public Long convertToDatabaseColumn(Date date) {
+            return date.getTime();
+        }
+
+        @Override
+        public Date convertToEntityAttribute(Long timestamp) {
+            return new Date(timestamp);
+        }
     }
 }

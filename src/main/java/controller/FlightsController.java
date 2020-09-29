@@ -1,6 +1,7 @@
 package controller;
 
 import model.Flight;
+import service.ListService;
 
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
@@ -17,12 +18,12 @@ public class FlightsController implements Serializable {
     @Inject
     private EntityManager em;
     @Inject
-    private ListController listController;
+    private ListService listService;
     private List<Flight> flights;
 
     @PostConstruct
     private void postConstruct() {
-        flights = listController.getFlights();
+        flights = listService.getFlights();
     }
 
     public List<Flight> getFlights() {
@@ -39,7 +40,7 @@ public class FlightsController implements Serializable {
 
     @Transactional
     public String save() {
-        List<Flight> persistedFlights = listController.getFlights();
+        List<Flight> persistedFlights = listService.getFlights();
         for (Flight persistedFlight : persistedFlights) {
             if (!flights.contains(persistedFlight)) {
                 em.remove(persistedFlight);

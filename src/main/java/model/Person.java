@@ -10,6 +10,20 @@ public class Person {
     @NotNull
     @Column(nullable = false)
     private String fullName;
-    @ManyToOne
-    private Profile profile;
+
+    public String getPassport() {
+        return passport;
+    }
+
+    public void setPassport(String passport) {
+        this.passport = passport;
+    }
+
+    public String getFullName() {
+        return fullName;
+    }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 }
