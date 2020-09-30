@@ -44,6 +44,7 @@ public class PersonHandler implements Serializable {
     @Transactional
     public String reserve() {
         place.setPerson(person);
+        place.setPrice(place.getFlight().getPlacePrice(place.getPlaceClass()));/*цена билета определяется в момент покупки*/
         em.merge(place);
         return "flight_filter?faces-redirect=true";
     }

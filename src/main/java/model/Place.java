@@ -15,6 +15,10 @@ public class Place {
     private Person person;
     @NotNull
     @Column(nullable = false)
+    @Enumerated
+    private PlaceClass placeClass;
+    @NotNull
+    @Column(nullable = false)
     private Integer price;
 
     public String getId() {
@@ -37,6 +41,14 @@ public class Place {
         this.person = person;
     }
 
+    public PlaceClass getPlaceClass() {
+        return placeClass;
+    }
+
+    public void setPlaceClass(PlaceClass placeClass) {
+        this.placeClass = placeClass;
+    }
+
     public Integer getPrice() {
         return price;
     }
@@ -56,5 +68,19 @@ public class Place {
     @Override
     public int hashCode() {
         return Objects.hash(getId());
+    }
+
+    public enum PlaceClass {
+        ECONOMY("эконом"), BUSINESS("бизнес");
+
+        private final String label;
+
+        PlaceClass(String label) {
+            this.label = label;
+        }
+
+        public String getLabel() {
+            return label;
+        }
     }
 }

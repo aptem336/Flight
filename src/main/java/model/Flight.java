@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Entity
 public class Flight {
@@ -17,10 +18,10 @@ public class Flight {
     private static final Integer BUSINESS_PLACE_PRICE = 5000;
     @NotNull
     @Column(nullable = false)
-    private final Integer economyPlaceCount;
+    private Integer economyPlacePrice;
     @NotNull
     @Column(nullable = false)
-    private final Integer businessPlaceCount;
+    private Integer businessPlacePrice;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -45,18 +46,18 @@ public class Flight {
 
     public Flight(int economyPlaceCount, int businessPlaceCount,
                   int economyPlacePrice, int businessPlacePrice) {
-        this.economyPlaceCount = economyPlaceCount;
-        this.businessPlaceCount = businessPlaceCount;
+        this.economyPlacePrice = economyPlacePrice;
+        this.businessPlacePrice = businessPlacePrice;
         for (int i = 0; i < economyPlaceCount; i++) {
             Place place = new Place();
-            place.setPrice(economyPlacePrice);
             place.setFlight(this);
+            place.setPlaceClass(Place.PlaceClass.ECONOMY);
             places.add(place);
         }
         for (int i = 0; i < businessPlaceCount; i++) {
             Place place = new Place();
-            place.setPrice(businessPlacePrice);
             place.setFlight(this);
+            place.setPlaceClass(Place.PlaceClass.BUSINESS);
             places.add(place);
         }
     }
@@ -71,6 +72,22 @@ public class Flight {
 
     public void setFromAirport(Airport fromAirport) {
         this.fromAirport = fromAirport;
+    }
+
+    public Integer getEconomyPlacePrice() {
+        return economyPlacePrice;
+    }
+
+    public void setEconomyPlacePrice(Integer economyPlacePrice) {
+        this.economyPlacePrice = economyPlacePrice;
+    }
+
+    public Integer getBusinessPlacePrice() {
+        return businessPlacePrice;
+    }
+
+    public void setBusinessPlacePrice(Integer businessPlacePrice) {
+        this.businessPlacePrice = businessPlacePrice;
     }
 
     public Airport getToAirport() {
@@ -105,14 +122,6 @@ public class Flight {
         this.places = places;
     }
 
-    public Integer getEconomyPlaceCount() {
-        return economyPlaceCount;
-    }
-
-    public Integer getBusinessPlaceCount() {
-        return businessPlaceCount;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,21 +137,37 @@ public class Flight {
 
     @Transient
     public List<Place> getEconomyPlaces() {
-        return getPlaces().subList(0, ECONOMY_PLACE_COUNT);
+        return getPlaces().stream()
+                .filter(p -> p.getPlaceClass() == Place.PlaceClass.ECONOMY)
+                .collect(Collectors.toList());
     }
 
     @Transient
     public List<Place> getBusinessPlaces() {
-        return getPlaces().subList(ECONOMY_PLACE_COUNT, ECONOMY_PLACE_COUNT + BUSINESS_PLACE_COUNT);
+        return getPlaces().stream()
+                .filter(p -> p.getPlaceClass() == Place.PlaceClass.BUSINESS)
+                .collect(Collectors.toList());
     }
 
     @Transient
     public boolean isEconomyEnabled() {
-        return getEconomyPlaces().stream().anyMatch(place -> place.getPerson() == null);
+        return getPlaces().stream()
+                .anyMatch(p -> p.getPlaceClass() == Place.PlaceClass.ECONOMY && p.getPerson() == null);
     }
 
     @Transient
     public boolean isBusinessEnabled() {
-        return getBusinessPlaces().stream().anyMatch(place -> place.getPerson() == null);
+        return getPlaces().stream()
+                .anyMatch(p -> p.getPlaceClass() == Place.PlaceClass.ECONOMY && p.getPerson() == null);
+    }
+
+    public Integer getPlacePrice(Place.PlaceClass placeClass) {
+        switch (placeClass) {
+            case ECONOMY:
+                return getBusinessPlacePrice();
+            case BUSINESS:
+                return getEconomyPlacePrice();
+        }
+        return null;
     }
 }
