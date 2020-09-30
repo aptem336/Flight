@@ -1,12 +1,26 @@
 package model;
 
+import converter.DateConverter;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Flight {
-    private static final int DEFAULT_PLACE_COUNT = 200;
+    private static final Integer ECONOMY_PLACE_COUNT = 100;
+    private static final Integer BUSINESS_PLACE_COUNT = 100;
+    private static final Integer ECONOMY_PLACE_PRICE = 3500;
+    private static final Integer BUSINESS_PLACE_PRICE = 5000;
+    @NotNull
+    @Column(nullable = false)
+    private final Integer economyPlaceCount;
+    @NotNull
+    @Column(nullable = false)
+    private final Integer businessPlaceCount;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -25,8 +39,23 @@ public class Flight {
     private List<Place> places = new ArrayList<>();
 
     public Flight() {
-        for (int row = 0; row < DEFAULT_PLACE_COUNT; row++) {
+        this(ECONOMY_PLACE_COUNT, BUSINESS_PLACE_COUNT,
+                ECONOMY_PLACE_PRICE, BUSINESS_PLACE_PRICE);
+    }
+
+    public Flight(int economyPlaceCount, int businessPlaceCount,
+                  int economyPlacePrice, int businessPlacePrice) {
+        this.economyPlaceCount = economyPlaceCount;
+        this.businessPlaceCount = businessPlaceCount;
+        for (int i = 0; i < economyPlaceCount; i++) {
             Place place = new Place();
+            place.setPrice(economyPlacePrice);
+            place.setFlight(this);
+            places.add(place);
+        }
+        for (int i = 0; i < businessPlaceCount; i++) {
+            Place place = new Place();
+            place.setPrice(businessPlacePrice);
             place.setFlight(this);
             places.add(place);
         }
@@ -76,6 +105,14 @@ public class Flight {
         this.places = places;
     }
 
+    public Integer getEconomyPlaceCount() {
+        return economyPlaceCount;
+    }
+
+    public Integer getBusinessPlaceCount() {
+        return businessPlaceCount;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,16 +126,23 @@ public class Flight {
         return Objects.hash(getId());
     }
 
-    @Converter(autoApply = true)
-    public static class DateConverter implements AttributeConverter<Date, Long> {
-        @Override
-        public Long convertToDatabaseColumn(Date date) {
-            return date.getTime();
-        }
+    @Transient
+    public List<Place> getEconomyPlaces() {
+        return getPlaces().subList(0, ECONOMY_PLACE_COUNT);
+    }
 
-        @Override
-        public Date convertToEntityAttribute(Long timestamp) {
-            return new Date(timestamp);
-        }
+    @Transient
+    public List<Place> getBusinessPlaces() {
+        return getPlaces().subList(ECONOMY_PLACE_COUNT, ECONOMY_PLACE_COUNT + BUSINESS_PLACE_COUNT);
+    }
+
+    @Transient
+    public boolean isEconomyEnabled() {
+        return getEconomyPlaces().stream().anyMatch(place -> place.getPerson() == null);
+    }
+
+    @Transient
+    public boolean isBusinessEnabled() {
+        return getBusinessPlaces().stream().anyMatch(place -> place.getPerson() == null);
     }
 }

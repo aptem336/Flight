@@ -1,6 +1,5 @@
 package controller;
 
-import model.Flight;
 import model.Person;
 import model.Place;
 
@@ -13,20 +12,11 @@ import java.io.Serializable;
 
 @Named
 @ViewScoped
-public class ReservationsController implements Serializable {
+public class PersonHandler implements Serializable {
     @Inject
     private EntityManager em;
-    private Flight flight;
     private Place place;
     private Person person;
-
-    public Flight getFlight() {
-        return flight;
-    }
-
-    public void setFlight(Flight flight) {
-        this.flight = flight;
-    }
 
     public Place getPlace() {
         return place;
@@ -47,10 +37,14 @@ public class ReservationsController implements Serializable {
         this.person = person;
     }
 
+    public Person.Gender[] getGenderValues() {
+        return Person.Gender.values();
+    }
+
     @Transactional
-    public String save() {
+    public String reserve() {
         place.setPerson(person);
         em.merge(place);
-        return "flights?faces-redirect=true";
+        return "flight_filter?faces-redirect=true";
     }
 }

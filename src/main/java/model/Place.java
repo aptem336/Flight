@@ -1,6 +1,7 @@
 package model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -12,6 +13,9 @@ public class Place {
     private Flight flight;
     @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Person person;
+    @NotNull
+    @Column(nullable = false)
+    private Integer price;
 
     public String getId() {
         return id;
@@ -31,6 +35,14 @@ public class Place {
 
     public void setPerson(Person person) {
         this.person = person;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
     }
 
     @Override

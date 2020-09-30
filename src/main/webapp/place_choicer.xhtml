@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:outputStylesheet library="css" name="main.css"/>
+<h:head>
+    <title>Выбор места</title>
+</h:head>
+<h:body>
+    <h2>
+        Выбор места
+        <h:button value="Назад"
+                  outcome="flight_filter?faces-redirect=true"/>
+    </h2>
+    <hr/>
+    <h:form>
+        <h:messages/>
+        <f:metadata>
+            <f:viewParam name="flight_id"
+                         value="#{placeChoicer.flight}"
+                         converter="#{flightConverter}"/>
+        </f:metadata>
+
+        <h:panelGrid columns="10">
+            <c:forEach var="place"
+                       items="#{placeChoicer.flight.economyPlaces}">
+                <h:selectOneRadio group="places"
+                                  disabled="#{place.person != null}"
+                                  value="#{placeChoicer.place}"
+                                  converter="#{placeConverter}"
+                                  required="true">
+                    <f:selectItem itemValue="#{place}"/>
+                    <f:ajax render="@form"/>
+                </h:selectOneRadio>
+            </c:forEach>
+        </h:panelGrid>
+        <br/>
+
+        <h:panelGrid columns="10">
+            <c:forEach var="place"
+                       items="#{placeChoicer.flight.businessPlaces}">
+                <h:selectOneRadio group="places"
+                                  disabled="#{place.person != null}"
+                                  value="#{placeChoicer.place}"
+                                  converter="#{placeConverter}"
+                                  required="true">
+                    <f:selectItem itemValue="#{place}"/>
+                    <f:ajax render="@form"/>
+                </h:selectOneRadio>
+            </c:forEach>
+        </h:panelGrid>
+
+        <h:button rendered="#{placeChoicer.place != null}"
+                  value="Бронировать"
+                  outcome="person_handler">
+            <f:param name="place_id"
+                     value="#{placeChoicer.place.id}"/>
+        </h:button>
+    </h:form>
+</h:body>
+</html>

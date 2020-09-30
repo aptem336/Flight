@@ -1,6 +1,7 @@
 package service;
 
 import model.Airport;
+import model.Country;
 import model.Flight;
 
 import javax.faces.view.ViewScoped;
@@ -35,6 +36,15 @@ public class ListService implements Serializable {
         Root<Airport> rootEntry = cq.from(Airport.class);
         CriteriaQuery<Airport> all = cq.select(rootEntry);
         TypedQuery<Airport> allQuery = em.createQuery(all);
+        return allQuery.getResultList();
+    }
+
+    public List<Country> getCountry() {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Country> cq = cb.createQuery(Country.class);
+        Root<Country> rootEntry = cq.from(Country.class);
+        CriteriaQuery<Country> all = cq.select(rootEntry);
+        TypedQuery<Country> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
 }
