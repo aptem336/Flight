@@ -12,7 +12,7 @@
 <h:body>
     <h2>Поиск авиарейса</h2>
     <hr/>
-    <h:form>
+    <h:form rendered="#{!listService.flights.isEmpty()}">
         <h:dataTable var="referenceFlight"
                      value="#{flightsFilter.referenceFlight}">
             <h:column>

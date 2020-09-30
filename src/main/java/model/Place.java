@@ -17,8 +17,6 @@ public class Place {
     @Column(nullable = false)
     @Enumerated
     private PlaceClass placeClass;
-    @NotNull
-    @Column(nullable = false)
     private Integer price;
 
     public String getId() {
