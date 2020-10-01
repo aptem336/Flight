@@ -4,7 +4,7 @@
 <html xml:lang="en" lang="en"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
->
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:outputStylesheet library="css" name="main.css"/>
 <h:head>
     <title>Поиск авиарейса</title>
@@ -44,9 +44,8 @@
                 </h:selectOneMenu>
             </h:column>
             <h:column>
-                <h:inputText value="#{referenceFlight.date}">
-                    <f:passThroughAttribute name="type"
-                                            value="date"/>
+                <h:inputText value="#{referenceFlight.date}"
+                             pt:type="date">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                     <f:ajax render="flight_filter_form:flight_filter_date"/>
                 </h:inputText>
@@ -79,9 +78,9 @@
                 <f:facet name="header">
                     <h:outputText value="Аэропорт отправления"/>
                 </f:facet>
-                <h:selectOneMenu value="#{flight.fromAirport}"
+                <h:selectOneMenu disabled="#{flight.id != null}"
+                                 value="#{flight.fromAirport}"
                                  converter="#{airportConverter}"
-                                 required="true"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}"
                                   itemLabel=""
@@ -96,9 +95,9 @@
                 <f:facet name="header">
                     <h:outputText value="Аэропорт прибытия"/>
                 </f:facet>
-                <h:selectOneMenu value="#{flight.toAirport}"
+                <h:selectOneMenu disabled="#{flight.id != null}"
+                                 value="#{flight.toAirport}"
                                  converter="#{airportConverter}"
-                                 required="true"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}"
                                   itemLabel=""
@@ -113,10 +112,9 @@
                 <f:facet name="header">
                     <h:outputText value="Дата"/>
                 </f:facet>
-                <h:inputText value="#{flight.date}"
-                             required="true">
-                    <f:passThroughAttribute name="type"
-                                            value="date"/>
+                <h:inputText disabled="#{flight.id != null}"
+                             value="#{flight.date}"
+                             pt:type="date">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
                 </h:inputText>
             </h:column>
@@ -124,8 +122,8 @@
                 <f:facet name="header">
                     <h:outputText value="Номер самолёт"/>
                 </f:facet>
-                <h:inputText value="#{flight.plane}"
-                             required="true">
+                <h:inputText disabled="#{flight.id != null}"
+                             value="#{flight.plane}">
                 </h:inputText>
             </h:column>
             <h:column>

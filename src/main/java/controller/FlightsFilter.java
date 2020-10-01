@@ -42,7 +42,7 @@ public class FlightsFilter implements Serializable {
             flightStream = flightStream.filter(f -> f.getDate().equals(referenceFlight.getDate()));
         }
         if (referenceFlight.getPlane() != null && !referenceFlight.getPlane().isEmpty()) {
-            flightStream = flightStream.filter(f -> f.getPlane().equals(referenceFlight.getPlane()));
+            flightStream = flightStream.filter(f -> f.getPlane().contains(referenceFlight.getPlane()));
         }
         return flightStream.collect(Collectors.toList());
     }

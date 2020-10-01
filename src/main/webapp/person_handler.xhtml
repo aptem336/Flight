@@ -4,7 +4,7 @@
 <html xml:lang="en" lang="en"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
->
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 <h:outputStylesheet library="css" name="main.css"/>
 <h:head>
     <title>Заполнение реквизитов</title>
@@ -27,21 +27,21 @@
                        for="passport"/><br/>
         <h:inputText id="passport"
                      value="#{personHandler.person.passport}"
-                     required="true"/><br/>
+                     pt:placeholder="SSSS NNNNNN"
+                     pt:pattern="[0-9]{4} [0-9]{6}">
+        </h:inputText><br/>
 
         <h:outputLabel value="ФИО:"
                        for="fullName"/><br/>
         <h:inputText id="fullName"
-                     value="#{personHandler.person.fullName}"
-                     required="true"/><br/>
+                     pt:placeholder="Иавнов Иван Иванович"
+                     value="#{personHandler.person.fullName}"/><br/>
 
         <h:outputLabel value="Дата рождения:"
                        for="birth_date"/><br/>
         <h:inputText id="birth_date"
                      value="#{personHandler.person.birthDate}"
-                     required="true">><br/>
-            <f:passThroughAttribute name="type"
-                                    value="date"/>
+                     pt:type="date"><br/>
             <f:convertDateTime pattern="yyyy-MM-dd"/>
         </h:inputText><br/>
 
@@ -50,8 +50,7 @@
         <!--@elvariable id="javax" type="javax"-->
         <h:selectOneRadio id="gender"
                           value="#{personHandler.person.gender}"
-                          converter="#{javax.faces.Enum}"
-                          required="true">
+                          converter="#{javax.faces.Enum}">
             <f:selectItems var="gender"
                            value="#{personHandler.genderValues}"
                            itemLabel="#{gender.label}"
@@ -63,7 +62,6 @@
         <h:selectOneMenu id="country"
                          value="#{personHandler.person.country}"
                          converter="#{countryConverter}"
-                         required="true"
                          hideNoSelectionOption="true">
             <f:selectItem itemValue="#{null}"
                           itemLabel=""

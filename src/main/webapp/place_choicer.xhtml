@@ -30,8 +30,7 @@
                 <h:selectOneRadio group="places"
                                   disabled="#{place.person != null}"
                                   value="#{placeChoicer.place}"
-                                  converter="#{placeConverter}"
-                                  required="true">
+                                  converter="#{placeConverter}">
                     <f:selectItem itemValue="#{place}"/>
                     <f:ajax render="@form"/>
                 </h:selectOneRadio>
@@ -45,8 +44,7 @@
                 <h:selectOneRadio group="places"
                                   disabled="#{place.person != null}"
                                   value="#{placeChoicer.place}"
-                                  converter="#{placeConverter}"
-                                  required="true">
+                                  converter="#{placeConverter}">
                     <f:selectItem itemValue="#{place}"/>
                     <f:ajax render="@form"/>
                 </h:selectOneRadio>
