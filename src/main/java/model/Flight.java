@@ -16,12 +16,6 @@ public class Flight {
     private static final Integer BUSINESS_PLACE_COUNT = 100;
     private static final Integer ECONOMY_PLACE_PRICE = 3500;
     private static final Integer BUSINESS_PLACE_PRICE = 5000;
-    @NotNull
-    @Column(nullable = false)
-    private Integer economyPlacePrice;
-    @NotNull
-    @Column(nullable = false)
-    private Integer businessPlacePrice;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
@@ -29,6 +23,12 @@ public class Flight {
     private Airport fromAirport;
     @ManyToOne(optional = false)
     private Airport toAirport;
+    @NotNull
+    @Column(nullable = false)
+    private Integer economyPlacePrice;
+    @NotNull
+    @Column(nullable = false)
+    private Integer businessPlacePrice;
     @NotNull
     @Column(nullable = false)
     private String plane;

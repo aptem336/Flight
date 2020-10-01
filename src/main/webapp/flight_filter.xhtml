@@ -64,15 +64,9 @@
             </h:column>
         </h:dataTable>
     </h:form>
-
+    <br/>
     <h:form id="flights_form">
         <h:messages/>
-        <h:commandButton value="+"
-                         action="#{flightsFilter.add()}"
-                         style="float: right">
-            <f:ajax render="@form"/>
-        </h:commandButton>
-
         <h:dataTable id="flights_table"
                      var="flight"
                      value="#{flightsFilter.flights}"
@@ -141,6 +135,12 @@
                 </h:button>
             </h:column>
             <h:column>
+                <f:facet name="header">
+                    <h:commandButton value="+"
+                                     action="#{flightsFilter.add()}">
+                        <f:ajax render="@form"/>
+                    </h:commandButton>
+                </f:facet>
                 <h:commandButton value="x"
                                  action="#{flightsFilter.remove(flight)}">
                     <f:ajax render="@form"/>

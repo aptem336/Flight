@@ -21,30 +21,24 @@ public class ListService implements Serializable {
     @Inject
     private EntityManager em;
 
-    public List<Flight> getFlights() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Flight> cq = cb.createQuery(Flight.class);
-        Root<Flight> rootEntry = cq.from(Flight.class);
-        CriteriaQuery<Flight> all = cq.select(rootEntry);
-        TypedQuery<Flight> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+    public List<Country> getCountry() {
+        return getAll(Country.class);
     }
 
     public List<Airport> getAirports() {
-        CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Airport> cq = cb.createQuery(Airport.class);
-        Root<Airport> rootEntry = cq.from(Airport.class);
-        CriteriaQuery<Airport> all = cq.select(rootEntry);
-        TypedQuery<Airport> allQuery = em.createQuery(all);
-        return allQuery.getResultList();
+        return getAll(Airport.class);
     }
 
-    public List<Country> getCountry() {
+    public List<Flight> getFlights() {
+        return getAll(Flight.class);
+    }
+
+    private <T> List<T> getAll(Class<T> tClass) {
         CriteriaBuilder cb = em.getCriteriaBuilder();
-        CriteriaQuery<Country> cq = cb.createQuery(Country.class);
-        Root<Country> rootEntry = cq.from(Country.class);
-        CriteriaQuery<Country> all = cq.select(rootEntry);
-        TypedQuery<Country> allQuery = em.createQuery(all);
+        CriteriaQuery<T> cq = cb.createQuery(tClass);
+        Root<T> rootEntry = cq.from(tClass);
+        CriteriaQuery<T> all = cq.select(rootEntry);
+        TypedQuery<T> allQuery = em.createQuery(all);
         return allQuery.getResultList();
     }
 }
