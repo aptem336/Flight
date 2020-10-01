@@ -12,7 +12,8 @@
 <h:body>
     <h2>Поиск авиарейса</h2>
     <hr/>
-    <h:form rendered="#{!listService.flights.isEmpty()}">
+    <h:form id="flights_filter_form"
+            rendered="#{!listService.flights.isEmpty()}">
         <h:dataTable var="referenceFlight"
                      value="#{flightsFilter.referenceFlight}">
             <h:column>
@@ -26,7 +27,7 @@
                                    value="#{listService.airports}"
                                    itemLabel="#{airport.city.name} (#{airport.name})"
                                    itemValue="#{airport}"/>
-                    <f:ajax render="flight_filter_form:flight_filter_date"/>
+                    <f:ajax render="flights_form:flights_table"/>
                 </h:selectOneMenu>
             </h:column>
             <h:column>
@@ -40,26 +41,30 @@
                                    value="#{listService.airports}"
                                    itemLabel="#{airport.city.name} (#{airport.name})"
                                    itemValue="#{airport}"/>
-                    <f:ajax render="flight_filter_form:flight_filter_date"/>
+                    <f:ajax render="flights_form:flights_table"/>
                 </h:selectOneMenu>
             </h:column>
             <h:column>
                 <h:inputText value="#{referenceFlight.date}"
                              pt:type="date">
                     <f:convertDateTime pattern="yyyy-MM-dd"/>
-                    <f:ajax render="flight_filter_form:flight_filter_date"/>
+                    <f:ajax render="flights_form:flights_table"/>
                 </h:inputText>
             </h:column>
             <h:column>
                 <h:inputText value="#{referenceFlight.plane}">
                     <f:ajax event="keyup"
-                            render="flight_filter_form:flight_filter_date"/>
+                            render="flights_form:flights_table"/>
                 </h:inputText>
+            </h:column>
+            <h:column>
+                <h:button value="Сброс"
+                          onclick="document.getElementById('flights_filter_form').reset()"/>
             </h:column>
         </h:dataTable>
     </h:form>
 
-    <h:form id="flight_filter_form">
+    <h:form id="flights_form">
         <h:messages/>
         <h:commandButton value="+"
                          action="#{flightsFilter.add()}"
@@ -67,7 +72,7 @@
             <f:ajax render="@form"/>
         </h:commandButton>
 
-        <h:dataTable id="flight_filter_date"
+        <h:dataTable id="flights_table"
                      var="flight"
                      value="#{flightsFilter.flights}"
                      border="1">
