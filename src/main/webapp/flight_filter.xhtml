@@ -21,7 +21,7 @@
                                  converter="#{airportConverter}"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}"
-                                  itemLabel=""
+                                  itemLabel="Аэропорт отправления"
                                   noSelectionOption="true"/>
                     <f:selectItems var="airport"
                                    value="#{listService.airports}"
@@ -35,7 +35,7 @@
                                  converter="#{airportConverter}"
                                  hideNoSelectionOption="true">
                     <f:selectItem itemValue="#{null}"
-                                  itemLabel=""
+                                  itemLabel="Аэропорт прибытия"
                                   noSelectionOption="true"/>
                     <f:selectItems var="airport"
                                    value="#{listService.airports}"
@@ -52,7 +52,8 @@
                 </h:inputText>
             </h:column>
             <h:column>
-                <h:inputText value="#{referenceFlight.plane}">
+                <h:inputText value="#{referenceFlight.plane}"
+                             pt:placeholder="Номер самолёт">
                     <f:ajax event="keyup"
                             render="flights_form:flights_table"/>
                 </h:inputText>

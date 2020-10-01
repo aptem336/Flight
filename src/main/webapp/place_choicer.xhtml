@@ -32,7 +32,7 @@
                                   value="#{placeChoicer.place}"
                                   converter="#{placeConverter}">
                     <f:selectItem itemValue="#{place}"/>
-                    <f:ajax render="@form"/>
+                    <f:ajax render="choice_button_wrapper"/>
                 </h:selectOneRadio>
             </c:forEach>
         </h:panelGrid>
@@ -46,17 +46,19 @@
                                   value="#{placeChoicer.place}"
                                   converter="#{placeConverter}">
                     <f:selectItem itemValue="#{place}"/>
-                    <f:ajax render="@form"/>
+                    <f:ajax render="choice_button_wrapper"/>
                 </h:selectOneRadio>
             </c:forEach>
         </h:panelGrid>
 
-        <h:button rendered="#{placeChoicer.place != null}"
-                  value="Бронировать"
-                  outcome="person_handler">
-            <f:param name="place_id"
-                     value="#{placeChoicer.place.id}"/>
-        </h:button>
+        <h:panelGroup id="choice_button_wrapper">
+            <h:button rendered="#{placeChoicer.place != null}"
+                      value="Бронировать"
+                      outcome="person_handler">
+                <f:param name="place_id"
+                         value="#{placeChoicer.place.id}"/>
+            </h:button>
+        </h:panelGroup>
     </h:form>
 </h:body>
 </html>
