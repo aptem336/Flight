@@ -4,11 +4,13 @@ import converter.DateConverter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 import java.util.Date;
 
 @Entity
 public class Person {
     @Id
+    @Pattern(regexp = "^\\d{4}-\\d{6}$")
     private String passport;
     @NotNull
     @Column(nullable = false)
