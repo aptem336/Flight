@@ -11,6 +11,10 @@
 </h:head>
 <h:body>
     <h2>Поиск авиарейса</h2>
+    <h:button rendered="#{flightsFilter.securityContext.callerPrincipal == null}"
+              value="Зарегистироваться"
+              outcome="login?faces-redirect=true"
+              style="float: right"/>
     <hr/>
     <h:form id="flights_filter_form"
             rendered="#{!listService.flights.isEmpty()}">

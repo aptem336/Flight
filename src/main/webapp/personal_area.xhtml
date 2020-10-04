@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite/cc"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+<h:outputStylesheet library="css" name="main.css"/>
+<h:head/>
+<h:body>
+    <h:form>
+        <h:outputLabel value="Номер паспорта:"
+                       for="passport"/><br/>
+        <h:inputText id="passport"
+                     value="#{personHandler.person.passport}"
+                     pt:placeholder="XXXX-XXXXXX">
+        </h:inputText><br/>
+
+        <h:outputLabel value="ФИО:"
+                       for="fullName"/><br/>
+        <h:inputText id="fullName"
+                     pt:placeholder="Иванов Иван Иванович"
+                     value="#{personHandler.person.fullName}"/><br/>
+
+        <h:outputLabel value="Дата рождения:"
+                       for="birth_date"/><br/>
+        <h:inputText id="birth_date"
+                     value="#{personHandler.person.birthDate}"
+                     pt:type="date"><br/>
+            <f:convertDateTime pattern="yyyy-MM-dd"/>
+        </h:inputText><br/>
+
+        <h:outputLabel value="Пол:"
+                       for="gender"/><br/>
+        <!--@elvariable id="javax" type="javax"-->
+        <h:selectOneRadio id="gender"
+                          value="#{personHandler.person.gender}"
+                          converter="#{javax.faces.Enum}">
+            <f:selectItems var="gender"
+                           value="#{personHandler.genderValues}"
+                           itemLabel="#{gender.label}"
+                           itemValue="#{gender}"/>
+        </h:selectOneRadio>
+
+        <h:outputLabel value="Гражданство:"
+                       for="country"/><br/>
+        <h:selectOneMenu id="country"
+                         value="#{personHandler.person.country}"
+                         converter="#{countryConverter}"
+                         hideNoSelectionOption="true">
+            <f:selectItem itemValue="#{null}"
+                          itemLabel="Гражданство"
+                          noSelectionOption="true"/>
+            <f:selectItems var="city"
+                           value="#{listService.country}"
+                           itemLabel="#{city.name}"
+                           itemValue="#{city}"/>
+        </h:selectOneMenu><br/><br/>
+
+        <h:commandButton value="Cохранить"
+                         action="#{personHandler.reserve()}"/>
+    </h:form>
+</h:body>
+</html>

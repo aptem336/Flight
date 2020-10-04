@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xml:lang="en" lang="en"
+      xmlns:h="http://xmlns.jcp.org/jsf/html">
+<h:outputStylesheet library="css" name="main.css"/>
+<h:head>
+    <title>Регистрация</title>
+</h:head>
+<h:body>
+    <h2>Регистрация</h2>
+    <hr/>
+    <h:form>
+        <h:outputLabel value="Логин"
+                       for="login"/><br/>
+        <h:inputText id="login"
+                     value="#{loginHandler.users.login}"/><br/>
+        <h:outputLabel value="Пароль"
+                       for="password"/><br/>
+        <h:inputSecret id="password"
+                       value="#{loginHandler.users.password}"/><br/>
+        <br/>
+        <h:commandButton value="Зарегистироваться"
+                         action="#{loginHandler.register()}"/>
+    </h:form>
+</h:body>
+</html>

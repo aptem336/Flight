@@ -8,6 +8,7 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
+import javax.security.enterprise.SecurityContext;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
@@ -19,6 +20,8 @@ import java.util.stream.Stream;
 public class FlightsFilter implements Serializable {
     @Inject
     private EntityManager em;
+    @Inject
+    private SecurityContext securityContext;
     @Inject
     private ListService listService;
     private List<Flight> flights;
@@ -79,5 +82,9 @@ public class FlightsFilter implements Serializable {
             em.merge(flight);
         }
         flights = listService.getFlights();
+    }
+
+    public SecurityContext getSecurityContext() {
+        return securityContext;
     }
 }
