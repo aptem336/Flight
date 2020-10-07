@@ -10,7 +10,7 @@ public class Users {
     @NotNull
     @Column(nullable = false)
     private String password;
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Person person;
     @NotNull
     @Column(nullable = false)

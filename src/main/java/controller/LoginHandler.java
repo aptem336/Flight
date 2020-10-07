@@ -1,13 +1,15 @@
 package controller;
 
-import model.Person;
 import model.Users;
 
 import javax.ejb.Stateless;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
 
 @Named
 @Stateless
@@ -21,7 +23,6 @@ public class LoginHandler {
     public Users getUsers() {
         if (users == null) {
             users = new Users();
-            users.setPerson(new Person());
         }
         return users;
     }

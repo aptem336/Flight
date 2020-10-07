@@ -10,11 +10,18 @@
     <title>Поиск авиарейса</title>
 </h:head>
 <h:body>
+    <h:form style="text-align: right">
+        <h:button value="Личный кабинет"
+                  outcome="personal_area?faces-redirect=true"/>
+        <br/>
+        <h:button rendered="#{flightsFilter.securityContext.callerPrincipal == null}"
+                  value="Зарегистироваться"
+                  outcome="login_handler?faces-redirect=true"/>
+        <h:commandButton rendered="#{flightsFilter.securityContext.callerPrincipal != null}"
+                         value="Выйти"
+                         action="#{flightsFilter.logout()}"/>
+    </h:form>
     <h2>Поиск авиарейса</h2>
-    <h:button rendered="#{flightsFilter.securityContext.callerPrincipal == null}"
-              value="Зарегистироваться"
-              outcome="login?faces-redirect=true"
-              style="float: right"/>
     <hr/>
     <h:form id="flights_filter_form"
             rendered="#{!listService.flights.isEmpty()}">

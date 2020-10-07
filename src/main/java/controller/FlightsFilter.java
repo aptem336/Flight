@@ -4,11 +4,13 @@ import model.Flight;
 import service.ListService;
 
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.security.enterprise.SecurityContext;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.util.List;
@@ -41,7 +43,7 @@ public class FlightsFilter implements Serializable {
         if (referenceFlight.getToAirport() != null) {
             flightStream = flightStream.filter(f -> f.getToAirport().equals(referenceFlight.getToAirport()));
         }
-       if (referenceFlight.getDate() != null) {
+        if (referenceFlight.getDate() != null) {
             flightStream = flightStream.filter(f -> f.getDate().equals(referenceFlight.getDate()));
         }
         if (referenceFlight.getPlane() != null && !referenceFlight.getPlane().isEmpty()) {
@@ -86,5 +88,10 @@ public class FlightsFilter implements Serializable {
 
     public SecurityContext getSecurityContext() {
         return securityContext;
+    }
+
+    public String logout() {
+        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+        return "flight_filter?faces-redirect=true";
     }
 }

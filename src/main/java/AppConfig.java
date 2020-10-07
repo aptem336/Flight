@@ -1,8 +1,13 @@
 import javax.enterprise.context.ApplicationScoped;
 import javax.security.enterprise.authentication.mechanism.http.BasicAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.FormAuthenticationMechanismDefinition;
+import javax.security.enterprise.authentication.mechanism.http.LoginToContinue;
 import javax.security.enterprise.identitystore.DatabaseIdentityStoreDefinition;
 
-@BasicAuthenticationMechanismDefinition(realmName = "defaultRealm")
+@FormAuthenticationMechanismDefinition(
+        loginToContinue = @LoginToContinue(
+                loginPage = "/login.html",
+                errorPage = "/login.html"))
 @DatabaseIdentityStoreDefinition(
         dataSourceLookup = "java:global/jdbc/db",
         callerQuery = "SELECT password FROM USERS WHERE login = ?",
