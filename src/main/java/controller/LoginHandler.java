@@ -2,17 +2,14 @@ package controller;
 
 import model.Users;
 
-import javax.ejb.Stateless;
-import javax.faces.context.FacesContext;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.security.enterprise.identitystore.Pbkdf2PasswordHash;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
 
 @Named
-@Stateless
+@RequestScoped
 public class LoginHandler {
     @Inject
     private EntityManager em;

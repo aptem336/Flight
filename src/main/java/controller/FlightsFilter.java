@@ -91,7 +91,7 @@ public class FlightsFilter implements Serializable {
     }
 
     public String logout() {
-        ((HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false)).invalidate();
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
         return "flight_filter?faces-redirect=true";
     }
 }

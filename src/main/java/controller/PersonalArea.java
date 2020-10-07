@@ -5,13 +5,14 @@ import model.Users;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Stateless;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import javax.persistence.EntityManager;
 import javax.security.enterprise.SecurityContext;
 
 @Named
-@Stateless
+@RequestScoped
 public class PersonalArea {
     @Inject
     private EntityManager em;
