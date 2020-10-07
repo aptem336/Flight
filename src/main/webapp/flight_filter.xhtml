@@ -11,7 +11,8 @@
 </h:head>
 <h:body>
     <h:form style="text-align: right">
-        <h:button value="Личный кабинет"
+        <h:button rendered="#{!flightsFilter.securityContext.callerPrincipal.name.equals('SYSTEM')}"
+                  value="Личный кабинет"
                   outcome="personal_area?faces-redirect=true"/>
         <br/>
         <h:button rendered="#{flightsFilter.securityContext.callerPrincipal == null}"
@@ -145,7 +146,7 @@
                              value="#{flight.id}"/>
                 </h:button>
             </h:column>
-            <h:column>
+            <h:column rendered="#{flightsFilter.securityContext.callerPrincipal.name.equals('SYSTEM')}">
                 <f:facet name="header">
                     <h:commandButton value="+"
                                      action="#{flightsFilter.add()}">
@@ -159,7 +160,8 @@
             </h:column>
         </h:dataTable>
 
-        <h:commandButton value="Сохранить"
+        <h:commandButton rendered="#{flightsFilter.securityContext.callerPrincipal.name.equals('SYSTEM')}"
+                         value="Сохранить"
                          action="#{flightsFilter.save}"/>
     </h:form>
 </h:body>
