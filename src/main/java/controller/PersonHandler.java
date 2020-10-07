@@ -26,8 +26,8 @@ public class PersonHandler implements Serializable {
     @PostConstruct
     private void postConstruct() {
         if (securityContext.getCallerPrincipal() != null) {
-            if (em.find(Users.class, securityContext.getCallerPrincipal()).getPerson() != null) {
-                person = em.find(Users.class, securityContext.getCallerPrincipal()).getPerson();
+            if (em.find(Users.class, securityContext.getCallerPrincipal().getName()).getPerson() != null) {
+                person = em.find(Users.class, securityContext.getCallerPrincipal().getName()).getPerson();
             }
         }
     }

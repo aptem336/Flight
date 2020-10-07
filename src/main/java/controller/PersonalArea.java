@@ -21,7 +21,7 @@ public class PersonalArea {
 
     @PostConstruct
     private void postConstruct() {
-        users = em.find(Users.class, securityContext.getCallerPrincipal());
+        users = em.find(Users.class, securityContext.getCallerPrincipal().getName());
     }
 
     public Person getPerson() {
